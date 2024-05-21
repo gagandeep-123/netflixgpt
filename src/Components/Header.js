@@ -1,17 +1,44 @@
 import React, { useState } from 'react'
-import { auth } from '../firebase'
+import { useEffect } from 'react'
+
 import { useNavigate } from 'react-router-dom';
 import { signOut } from "firebase/auth"
-import {useSelector} from 'react-redux'
-
+import { useSelector } from 'react-redux'
+import { onAuthStateChanged } from "firebase/auth";
+import { adduser, removeUser } from '../Utils/userSlice'
+import { auth } from '../firebase'
+import { useDispatch } from 'react-redux';
 const Header = () => {
+  
   
   const Myuser = useSelector((store) => store.user
   )
   const navigate = useNavigate()
+  const dispatch = useDispatch();
+     useEffect(() => {
+      const authChangeResult =  onAuthStateChanged(auth, user => {
+  if (user) {
+    // User is signed in, see docs for a list of available properties
+    // https://firebase.google.com/docs/reference/js/auth.user
+      const { uid, email, displayName } = user;
+    dispatch(adduser({ uid: uid, email: email, displayName: displayName }))
+    navigate("/browse")
+     
+    // ...
+  } else {
+    // User is signed out
+      // ...
+    dispatch(removeUser())
+    navigate("/")
+  }
+      });
+       return () => authChangeResult();
+
+        
+    },[])
   const Handlebuttonclick = () => {
     signOut(auth).then(() => {
-      navigate("/")
+      
   
 }).catch((error) => {
   // An error happened.
