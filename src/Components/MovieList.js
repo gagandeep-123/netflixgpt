@@ -1,21 +1,22 @@
-import React from 'react'
-import MovieBackground from './MovieBackground'
-import MovieCards from './MovieCards'
+import React from "react";
 
-const MovieList = ({ title, path }) => {
-  
+import MovieCards from "./MovieCards";
+
+
+const MovieList = ({ title, movies }) => {
 
   return (
-    <div>
-      <div>
-        {title}
-    
-      </div>
-      <div>
-       <MovieCards path = {path} />
+    <div className= "px-6">
+      <h1 className="text-4xl font-bold py-4 text-white">{title}</h1>
+      <div className="flex overflow-x-scroll scrollbar-none">
+        <div className="flex">
+          {movies?.map((movies) => (
+            <MovieCards path={movies.poster_path} />
+          ))}
+        </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default MovieList
+export default MovieList;

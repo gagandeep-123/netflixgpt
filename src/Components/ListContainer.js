@@ -1,25 +1,21 @@
-import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
-import MovieList from './MovieList'
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import MovieList from "./MovieList";
 
 const ListContainer = () => {
-  const allmovies = useSelector(store => store.movies?.nowplayingmovies)
-
-  const [moviepath, setmoviepath] = useState("");
+  const movies = useSelector((store) => store.movies)
   
-  useEffect(() => {
-    if (allmovies && allmovies[0])
-      setmoviepath(allmovies[0].poster_path)
-  }, [allmovies])
-
+  
   return (
-    <div>
-      
-      <MovieList title ={"Now playing"} path = {moviepath} />     
-    
-    
+    <div className="bg-black">
+      <div className="-mt-52 relative z-20 b">
+        <MovieList title={"Now playing"} movies={movies.nowplayingmovies } />
+        <MovieList title={"Popular"} movies ={movies.popularmovies} />
+        <MovieList title={"Upcoming"} movies={movies.upcomingmovies} />
+        <MovieList title={"Top Rated"} movies={movies.topratedmovies} />
+      </div>
     </div>
-  )
+  );
 }
 
-export default ListContainer
+export default ListContainer;
