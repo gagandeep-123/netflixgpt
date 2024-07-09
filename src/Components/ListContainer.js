@@ -8,7 +8,7 @@ const ListContainer = () => {
   
   return (
     <div className="bg-black">
-      <div className="-mt-52 relative z-20 b">
+      <div className="-mt-52 relative z-20 ">
         <MovieList title={"Now playing"} movies={movies.nowplayingmovies } />
         <MovieList title={"Popular"} movies ={movies.popularmovies} />
         <MovieList title={"Upcoming"} movies={movies.upcomingmovies} />
